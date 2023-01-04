@@ -23,37 +23,19 @@ const About: NextPage = () => {
                                         <h2
                                             className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1"
                                         >
-                                            JAVSCRIPT
+                                            TS3
                                         </h2>
                                         <h1
                                             className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3"
                                         >
-                                            The idea behind this project
+                                            Welcome to the ultimate experience!
                                         </h1>
                                         <p className="leading-relaxed mb-3">
-                                            Day-to-Day, there are many new JavaScript libraries or
-                                            Frameworks such as ReactJs, Angular, VueJs etc. Now the question
-                                            arises to - Which one to learn ? <br />
-                                            The answer to this question depends on for what you are using
-                                            the framework, for example - If you want Front-End Development,
-                                            you can use ReactJs, Angular or VueJs or if you want to choose
+                                            My name is Abuzaid and I am the brain behind this operation”I’m laughing rn lol”. I am a one-man team with a love for all things and a passion for creating awesome designs (and a lot more fun).
+                                            Thank you for being here. I hope you enjoy using this app as much as I enjoyed creating it.
 
                                         </p>
-                                        <a className="text-indigo-500 inline-flex items-center"
-                                        >Learn More
-                                            <svg
-                                                className="w-4 h-4 ml-2"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                                stroke-width="2"
-                                                fill="none"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                            >
-                                                <path d="M5 12h14"></path>
-                                                <path d="M12 5l7 7-7 7"></path>
-                                            </svg>
-                                        </a>
+                                     
                                     </div>
                                 </div>
 
