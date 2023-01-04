@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextPage } from "next";
 import { trpc } from "../utils/trpc";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from "next/router";
 import Nav from "../components/nav";
 import NavTop from "../components/navtop";
@@ -10,7 +11,7 @@ const NewPost: NextPage = () => {
     const [content, setContent] = useState('');
     const router = useRouter();
     const sendPost = trpc.example.addPost.useMutation({
-        onError: (e) => {
+        onError: () => {
             alert('Please login');
             router.push('/api/auth/signin')
         },
