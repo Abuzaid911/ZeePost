@@ -1,5 +1,4 @@
 import NextAuth, { type NextAuthOptions } from "next-auth";
-import TwitterProvider from "next-auth/providers/twitter";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 // Prisma adapter for NextAuth, optional and can be removed
@@ -21,11 +20,6 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    TwitterProvider({
-      clientId: env.Twitter_CLIENT_ID,
-      clientSecret: env.Twitter_CLIENT_SECRET,
-      version: "2.0"
-    }),
     GithubProvider({clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET}),
     GoogleProvider({clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET})
     // ...add more providers here
