@@ -10,8 +10,8 @@ function NavTop(){
               </label>
               <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
                 <li><a>Homepage</a></li>
-                <li><a href="/new">New post</a></li>
-                <li><a href="/about">About</a></li>
+                <li><link href="/new">New post</link></li>
+                <li><link href="/about">About</link></li>
               </ul>
             </div>
           </div>

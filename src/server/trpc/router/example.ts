@@ -1,5 +1,4 @@
 import { TRPCError } from "@trpc/server";
-import { detectContentType } from "next/dist/server/image-optimizer";
 import { z } from "zod";
 import { router, publicProcedure } from "../trpc";
 
