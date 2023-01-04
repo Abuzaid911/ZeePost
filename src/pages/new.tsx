@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { NextPage } from "next";
 import { trpc } from "../utils/trpc";
-import { useState } from 'react';
-import { useRouter } from "next/router";
+import { useEffect, useState } from 'react';
+import Router, { useRouter } from "next/router";
 import Nav from "../components/nav";
 import NavTop from "../components/navtop";
+import { useSession } from "next-auth/react";
 const NewPost: NextPage = () => {
 
     const [title, setTitle] = useState('');
@@ -16,9 +17,18 @@ const NewPost: NextPage = () => {
             router.push('/api/auth/signin')
         },
         onSuccess: function (data) {
-            console.log(data);
+            router.push('/');
         }
     });
+    const session = useSession();
+    useEffect(()=>{
+        if (session.status=="unauthenticated")
+        {
+            alert('Go and login')
+            router.push('/')
+
+        }
+    }, [session.status])
 
     const handleNewPost = (event: any) => {
         event.preventDefault(); // prevent the form from refreshing the page
@@ -33,7 +43,15 @@ const NewPost: NextPage = () => {
     }
 
     function handleChange(event: any) {
-        setTitle(event.target.value); // update the content in the component's state when the input field changes
+        const newTitle: string = event.target.value;
+
+        const firstLetter = newTitle.charAt(0).toLocaleUpperCase();
+
+        const remainingLetters = newTitle.slice(1)
+
+        setTitle(firstLetter + remainingLetters);
+
+        // update the content in the component's state when the input field changes
     }
     function handleMChange(event: any) {
         setContent(event.target.value); // update the content in the component's state when the input field changes
@@ -44,34 +62,20 @@ const NewPost: NextPage = () => {
         <div>
             <NavTop />
 
-            <div className="container mx-auto py-10 ">
-                <h1 className="text-3xl font-bold mb-4 mx-auto bg-gradient-to-r from-green-400 to-slate-300 text-transparent bg-clip-text">Create a new post</h1>
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleNewPost}>
-                    <div className="mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="title">
-                        Title:
-                        </label>
-                        <input className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Type a wacky title here" id="title" type="text" value={title} onChange={handleChange} />
+            <form className="container flex flex-col justify-center items-center mx-auto" onSubmit={handleNewPost}>
+                <div className="card w-11/12 lg:w-7/12 bg-base-100 my-4 border-primary-content border-2 ">
+                    <div className="card-body ">
+                        <input value={title} onChange={handleChange} className="card-title" placeholder="Title" />
+                        <textarea rows={8} value={content} onChange={handleMChange} className="font-mono" placeholder="Free your mind here .." />
                     </div>
-                    <div className="mb-6">
-                        <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor="text">
-                            Free your mind:
-                        </label>
-                        <textarea className="shadow appearance-none border rounded w-full py-2 px-3 
-           text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Don't hold back – let your wackiest ideas flow onto the page!" id="text" rows={8} value={content} onChange={handleMChange}/>
-                    </div>
-                    <div className="flex items-center justify-between">
-                        <button className="btn btn-active btn-accent" >
-                            Post
-                        </button>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <button className={`btn btn-active btn-accent ${sendPost.isLoading?'loading':''}`} disabled={sendPost.isLoading} >
+                    Post
+                </button>
+            </form>
 
             <Nav active="add" />
-
         </div>
-
     )
 }
 

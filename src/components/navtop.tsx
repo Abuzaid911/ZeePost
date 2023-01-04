@@ -36,7 +36,7 @@ function NavTop() {
           </button>
           <NoSSR>
             
-              {session.status == "loading" && <button className="btn btn-square loading"></button>}
+              {session.status == "loading" && <button className="btn btn-square bg-green-200 loading"></button>}
               {session.status == "unauthenticated" && (<>
                 <button className="btn btn-ghost btn-circle " onClick={()=> signIn("google")}><GoogleIcon/></button>
                 <button className="btn btn-ghost btn-circle " onClick={()=> signIn("github")}><GithubIcon/></button>
