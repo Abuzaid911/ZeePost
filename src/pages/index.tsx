@@ -3,6 +3,7 @@ import { type NextPage } from "next";
 import { trpc } from "../utils/trpc";
 import Nav from "../components/nav";
 import NavTop from "../components/navtop";
+import Footer from "../components/footer";
 
 
 const Home: NextPage = () => {
@@ -33,7 +34,7 @@ const Home: NextPage = () => {
           );
         })}
       </div>
-
+        <Footer/>
       <Nav active="home" />
     </div>
 
