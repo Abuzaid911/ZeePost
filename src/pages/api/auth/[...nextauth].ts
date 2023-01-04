@@ -25,9 +25,14 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.Twitter_CLIENT_SECRET,
       version: "2.0"
     }),
-    GithubProvider({clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET})
+    GithubProvider({clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET}),
+    GoogleProvider({clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET})
     // ...add more providers here
   ],
 };
 
 export default NextAuth(authOptions);
+function GoogleProvider(arg0: { clientId: string; clientSecret: string; }): import("next-auth/providers/index.js").Provider {
+  throw new Error("Function not implemented.");
+}
+
