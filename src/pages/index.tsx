@@ -1,15 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 import { type NextPage } from "next";
-import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
 import { trpc } from "../utils/trpc";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import Nav from "../components/nav";
 import NavTop from "../components/navtop";
 
 
 const Home: NextPage = () => {
-  const router = useRouter();
   const fetchPosts = trpc.example.getPosts.useQuery();
   console.log(fetchPosts.data);
   return (
@@ -27,7 +23,7 @@ const Home: NextPage = () => {
                 <div className="flex flex-col mt-4">
                   <div className="avatar">
                     <div className="rw-24 w-14 rounded-full ring ring-pink-200 ring-offset-base-100 ring-offset-2">
-                      <img src={post.user.image!} />
+                      <img src={post.user.image ?? ""} alt="" />
                     </div>
                   </div>
                   <p className="font-bold">{post.user.name} </p>
