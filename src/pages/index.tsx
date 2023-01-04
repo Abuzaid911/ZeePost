@@ -9,12 +9,18 @@ import Footer from "../components/footer";
 const Home: NextPage = () => {
   const fetchPosts = trpc.example.getPosts.useQuery();
   console.log(fetchPosts.data);
+
   return (
 
     <div>
       <NavTop />
       {/* ------ POSTS SECTION ------ */}
       <div className="container px-10 flex flex-col items-center mx-auto">
+        {fetchPosts.isLoading && (
+          <div className="flex items-center justify-center space-x-2">
+           <div className="text-center text-2xl font-bold font-sans bg-gradient-to-r from-green-400 to-slate-300 text-transparent bg-clip-text">Hold on while we teach the penguins how to dance..</div>
+          </div>
+        )}
         {fetchPosts.data?.map(function (post, index) {
           return (
             <div className="card w-11/12 lg:w-7/12 bg-base-100 my-4 border-primary-content border-2 " key={index}>
@@ -34,7 +40,7 @@ const Home: NextPage = () => {
           );
         })}
       </div>
-        <Footer/>
+      <Footer />
       <Nav active="home" />
     </div>
 
