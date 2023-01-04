@@ -23,7 +23,7 @@ const About: NextPage = () => {
                                         <h2
                                             className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1"
                                         >
-                                            TS3
+                                            T3
                                         </h2>
                                         <h1
                                             className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3"
