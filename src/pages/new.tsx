@@ -25,7 +25,7 @@ const NewPost: NextPage = () => {
         if (session.status=="unauthenticated")
         {
             alert('Go and login')
-            router.push('/')
+            router.push('/api/auth/signin')
 
         }
     }, [session.status])
