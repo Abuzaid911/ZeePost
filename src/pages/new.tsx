@@ -24,7 +24,7 @@ const NewPost: NextPage = () => {
     useEffect(()=>{
         if (session.status=="unauthenticated")
         {
-            alert('Go and login')
+            alert('May you login please?')
             router.push('/api/auth/signin') 
         }
 
