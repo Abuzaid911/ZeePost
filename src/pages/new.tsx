@@ -26,8 +26,11 @@ const NewPost: NextPage = () => {
         {
             alert('Go and login')
             router.push('/api/auth/signin')
-
+            .then(() => {
+                router.push('/new');
+              })        
         }
+
     }, [session.status])
 
     const handleNewPost = (event: any) => {
