@@ -20,7 +20,7 @@ const Home: NextPage = () => {
             <div className="text-center text-2xl font-bold font-sans bg-gradient-to-r from-green-400 to-slate-300 text-transparent bg-clip-text">Hold on while we teach the penguins how to dance..</div>
           </div>
         )}
-        {fetchPosts.data?.reverse().map(function (post, index) {
+        {fetchPosts.data?.map(function (post, index) {
           return (
             <div className="card w-11/12 lg:w-7/12 bg-base-100 my-4 border-primary-content border-2 " key={index}>
               <div className="card-body ">
@@ -38,7 +38,7 @@ const Home: NextPage = () => {
               </div>
             </div>
           );
-        })}
+        }).reverse()}
       </div>
       <Footer />
       <Nav active="home" />
