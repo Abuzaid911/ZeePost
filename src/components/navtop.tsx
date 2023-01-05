@@ -57,8 +57,6 @@ function NavTop() {
                   </ul>
                 </div>
               </div>}
-
-            
           </NoSSR>
         </div>
       </div>
