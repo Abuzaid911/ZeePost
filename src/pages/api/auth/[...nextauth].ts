@@ -20,8 +20,22 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    GithubProvider({clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET}),
-    GoogleProvider({clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET})
+    GithubProvider({clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET, style: {
+      logo: "",
+      logoDark: "",
+      bg: "#fff",
+      bgDark: "#fff",
+      text: "#000",
+      textDark: "#000"
+    },}),
+    GoogleProvider({clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET, style: {
+      logo: "",
+      logoDark: "",
+      bgDark: "#fff",
+      bg: "#fff",
+      text: "#000",
+      textDark: "#000"
+    },})
     // ...add more providers here
   ],
 };
