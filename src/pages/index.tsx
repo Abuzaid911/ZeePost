@@ -45,7 +45,6 @@ const Home: NextPage = () => {
       {/*  )}*/}
       {/*  </label>*/}
       {/*</button>*/}
-
       <div className="container mx-auto flex flex-row">
         <div className="flex-1 px-4">
           {fetchPosts.isLoading && (
