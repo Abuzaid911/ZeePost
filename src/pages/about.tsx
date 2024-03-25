@@ -1,52 +1,52 @@
-import { type NextPage } from "next";
-import Nav from "../components/nav";
+import React from 'react';
+import { FaInstagram, FaLinkedinIn, FaTwitter, FaGithub } from 'react-icons/fa';
+import QRCode from 'qrcode.react';
 import NavTop from "../components/navtop";
+import Nav from "../components/nav";
+import {NextPage} from "next";
 
-
-const About: NextPage = () => {
+const About:NextPage = () => {
+    const description = "My name is Abuzaid and I am the brain behind this operation xD. I am a one-man team with a love for all things and a passion for creating awesome designs (and a lot more fun). Thank you for being here. I hope you enjoy using this app as much as I enjoyed creating it."; // Replace with your actual description
 
     return (
-        <div>
+        <>
             <NavTop />
-
-            <html lang="en">
-
-                <body>
-                    <section className="text-gray-600 body-font">
-                        <div className="container px-5 py-24 mx-auto">
-                            <div className="flex justify-center -m-4">
-
-                                <div className="p-4 lg:w-1/3">
-                                    <div
-                                        className="h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative"
-                                    >
-                                        <h2
-                                            className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1"
-                                        >
-                                            T3
-                                        </h2>
-                                        <h1
-                                            className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3"
-                                        >
-                                            Welcome to the ultimate experience!
-                                        </h1>
-                                        <p className="leading-relaxed mb-3">
-                                            My name is Abuzaid and I am the brain behind this operation”I’m laughing rn lol”. I am a one-man team with a love for all things and a passion for creating awesome designs (and a lot more fun).
-                                            Thank you for being here. I hope you enjoy using this app as much as I enjoyed creating it.
-
-                                        </p>
-                                     
-                                    </div>
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </section>
-                </body>
-            </html>
+            <div className="min-h-screen bg-white flex flex-col md:flex-row items-center justify-center p-4 gap-8 ">
+                <div className="flex flex-col items-center">
+                    <div className="space-y-2 mb-4">
+                        <SocialLink Icon={FaLinkedinIn} text="LinkedIn" url="https://www.linkedin.com/in/ahmed-abuzaid-a65732185/" />
+                        <SocialLink Icon={FaGithub} text="GitHub" url="https://github.com/Abuzaid911" />
+                        <SocialLink Icon={FaInstagram} text="Instagram" url="https://www.instagram.com/ahmedabuzaids/" />
+                        <SocialLink Icon={FaTwitter} text="Twitter" url="https://twitter.com/ahmedwallahi?s=21&t=pz7e97LWT3QpMitZRWSbTg" />
+                    </div>
+                    {/*<div className="shadow-lg">*/}
+                    {/*    <QRCode value="https://abuzaid.vercel.app/" size={96} />*/}
+                    {/*</div>*/}
+                </div>
+                <div className="max-w-md text-center md:text-left">
+                    <div className="rounded-full overflow-hidden w-48 h-48 mb-4 mx-auto md:mx-0">
+                        <img src="https://avatars.githubusercontent.com/u/107811441?v=4" alt="Profile" className="object-cover w-full h-full" />
+                    </div>
+                    {/*<h2 className="text-3xl font-semibold mb-2 ml-6 font-mono">@ABUZAID</h2>*/}
+                    <p className="font-mono bg-gradient-to-r from-green-400 to-black text-transparent bg-clip-text">{description}</p>
+                </div>
+            </div>
             <Nav active="about" />
-        </div>
+        </>
+    );
+};
+
+const SocialLink = ({ Icon, text, url }) => {
+    return (
+        <a
+            href={url}
+            className="flex items-center justify-center bg-teal-300 rounded-full py-2 px-4 hover:bg-teal-400 transition duration-300 w-40"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <Icon className="text-white text-xl" />
+            <span className="ml-2 text-white font-semibold">{text}</span>
+        </a>
     );
 };
 
