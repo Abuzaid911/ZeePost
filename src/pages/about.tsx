@@ -4,7 +4,14 @@ import QRCode from 'qrcode.react';
 import NavTop from "../components/navtop";
 import Nav from "../components/nav";
 import {NextPage} from "next";
+import Link from "next/link";
+import { IconType } from 'react-icons';
 
+interface SocialLinkProps {
+    Icon: IconType; // Use IconType for the Icon prop
+    text: string;
+    url: string;
+}
 const About:NextPage = () => {
     const description = "My name is Abuzaid and I am the brain behind this operation xD. I am a one-man team with a love for all things and a passion for creating awesome designs (and a lot more fun). Thank you for being here. I hope you enjoy using this app as much as I enjoyed creating it."; // Replace with your actual description
 
@@ -36,18 +43,14 @@ const About:NextPage = () => {
     );
 };
 
-const SocialLink = ({ Icon, text, url }) => {
+const SocialLink: React.FC<SocialLinkProps> = React.memo(({ Icon, text, url }) => {
     return (
-        <a
-            href={url}
-            className="flex items-center justify-center bg-teal-300 rounded-full py-2 px-4 hover:bg-teal-400 transition duration-300 w-40"
-            target="_blank"
-            rel="noopener noreferrer"
-        >
+        <a href={url} className="flex items-center justify-center bg-teal-300 rounded-full py-2 px-4 hover:bg-teal-400 transition-colors w-40"
+           target="_blank" rel="noopener noreferrer">
             <Icon className="text-white text-xl" />
             <span className="ml-2 text-white font-semibold">{text}</span>
         </a>
     );
-};
+});
 
 export default About;
