@@ -45,11 +45,13 @@ const About:NextPage = () => {
 
 const SocialLink= React.memo(({ Icon, text, url }: SocialLinkProps) => {
     return (
+        <>
         <a href={url} className="flex items-center justify-center bg-teal-300 rounded-full py-2 px-4 hover:bg-teal-400 transition-colors w-40"
            target="_blank" rel="noopener noreferrer">
             <Icon className="text-white text-xl" />
             <span className="ml-2 text-white font-semibold">{text}</span>
         </a>
+        </>
     );
 });
 
