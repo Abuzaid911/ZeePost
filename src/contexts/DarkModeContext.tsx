@@ -1,16 +1,20 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, Dispatch, SetStateAction } from 'react';
 
 // Define the type for the dark mode context value
-type DarkModeState = [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-const DarkModeContext = createContext<DarkModeState>([false, () => {}]);
+type DarkModeState = [boolean, Dispatch<SetStateAction<boolean>>];
+
+// Define a no-op function to satisfy the TypeScript signature requirement
+const noop = () => {};
+
+const DarkModeContext = createContext<DarkModeState>([false, noop]);
 
 // Define the type for the props that DarkModeProvider accepts
 type DarkModeProviderProps = {
-  children: ReactNode; // This is where we define that children is a prop
+  children: ReactNode;
 };
 
 export const DarkModeProvider = ({ children }: DarkModeProviderProps) => {
-    const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
