@@ -11,11 +11,9 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <DarkModeProvider>
     <SessionProvider session={session}>
       <Component {...pageProps} />  
     </SessionProvider>
-    </DarkModeProvider>
   );
 };
 

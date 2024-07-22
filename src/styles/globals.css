@@ -1,11 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* .dark .bg-white {
-    background-color: #111827; 
+.loader {
+    border-top-color: black;
+    animation: spinner 1.5s linear infinite;
   }
-  .dark .text-black {
-    color: #f9fafb;
-  } */
-   
+  
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
