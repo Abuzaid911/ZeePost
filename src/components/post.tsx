@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 export interface PostType {
   id: string;
@@ -22,7 +21,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
       <div className="post-header flex justify-between items-center mb-4">
         <div className="flex items-center">
           {post.user.image && (
-            <Image
+            <img
               src={post.user.image}
               alt={post.user.name??""}
               className="w-10 h-10 rounded-full mr-4"
