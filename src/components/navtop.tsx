@@ -6,16 +6,11 @@ import { IoSunnyOutline } from "react-icons/io5";
 import NoSSR from "./NoSSR";
 import GoogleIcon from "./GoogleIcon";
 import GithubIcon from "./GithubIcon";
-import { useDarkMode } from "../contexts/DarkModeContext";
 
 
 function NavTop() {
   const session = useSession();
-  const [darkMode, setDarkMode] = useDarkMode();
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
   return (
 
     <nav>
