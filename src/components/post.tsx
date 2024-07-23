@@ -4,10 +4,10 @@ export interface PostType {
   id: string;
   title: string;
   content: string;
-  createdAt: string;
+  createdAt: Date;
   user: {
-    name: string;
-    image?: string;
+    name: string|null;
+    image: string|null;
   };
 }
 
@@ -32,9 +32,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
             <p className="text-sm text-gray-500">By {post.user.name}</p>
           </div>
         </div>
-        <span className="text-sm text-gray-500">
+        {/* <span className="text-sm text-gray-500">
           {new Date(post.createdAt).toLocaleDateString()}
-        </span>
+        </span> */}
       </div>
       <p className="text-gray-600 mb-4">{post.content}</p>
 
