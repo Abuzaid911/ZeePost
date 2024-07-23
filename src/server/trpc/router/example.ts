@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { env } from "../../../env/server.mjs";
 import { router, publicProcedure } from "../trpc";
 
 export const exampleRouter = router({
@@ -29,6 +30,7 @@ export const exampleRouter = router({
     .input(
       z.object({}).nullish()
     ).query(async function ({ctx}) {
+      console.log("database url ",env.DATABASE_URL);
       return await ctx.prisma.post.findMany({include:{user : true}});
     })
 });
