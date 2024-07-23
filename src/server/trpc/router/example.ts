@@ -8,7 +8,7 @@ export const exampleRouter = router({
     .input(
       z.object({
         title: z.string().min(1),
-        content: z.string().min(3),
+        content: z.string().min(1),
       })
     )
     .mutation(async ({ input, ctx }) => {
