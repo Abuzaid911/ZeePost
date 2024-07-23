@@ -1,79 +1,44 @@
-import React, { useState } from 'react';
-import { NextPage } from 'next';
-import Head from 'next/head';
-import { trpc } from '../utils/trpc';
-import Nav from '../components/nav';
-import NavTop from '../components/navtop';
-import Footer from '../components/footer';
-import Post from '../components/post';
-import Spinner from '../components/Spinner';
+import { type NextPage } from "next";
+import { trpc } from "../utils/trpc";
+import Nav from "../components/nav";
+import NavTop from "../components/navtop";
+import Footer from "../components/footer";
+
 
 const Home: NextPage = () => {
-  const { data, isLoading, error, refetch } = trpc.example.getPosts.useQuery();
-  const deleteOldPosts = trpc.example.deleteOldPosts.useMutation();
-  const [date, setDate] = useState('');
 
-  const handleDelete = async () => {
-    try {
-      await deleteOldPosts.mutateAsync({ beforeDate: date });
-      alert('Old posts deleted successfully');
-      refetch(); // Refetch posts after deletion
-    } catch (error) {
-      alert('Failed to delete old posts');
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center text-xl font-bold text-red-500">
-        Error fetching posts: {error.message}
-      </div>
-    );
-  }
+  const fetchPosts = trpc.example.getPosts.useQuery();
+  console.log(fetchPosts.data);
 
   return (
     <>
-      <Head>
-        <title>Home | My App</title>
-        <meta name="description" content="Home page of My App" />
-      </Head>
       <NavTop />
-      <div className="container mx-auto flex flex-col items-center">
-        <div className="w-full md:w-2/3 lg:w-1/2 px-4 mb-4">
-          {/* <div className="flex items-center">
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="border p-2 rounded"
-            />
-            <button
-              onClick={handleDelete}
-              className="ml-2 px-4 py-2 bg-red-600 text-white rounded"
-            >
-              Delete Old Posts
-            </button>
-          </div> */}
-        </div>
-        <div className="w-full md:w-2/3 lg:w-1/2 px-4">
-          {data?.length ? (
-            data.slice().reverse().map((post) => (
-              <Post key={post.id} post={post} />
-            ))
-          ) : (
-            <div className="text-center text-xl font-bold text-red-500">
-              No posts available.
+      <div className="container px-10 flex flex-col items-center mx-auto">
+
+        {fetchPosts.isLoading && (
+          <div className="flex items-center justify-center space-x-2">
+            <div className="text-center text-2xl font-bold font-sans bg-gradient-to-r from-green-400 to-slate-300 text-transparent bg-clip-text">Hold on while we teach the penguins how to dance..</div>
+          </div>
+        )}
+        {fetchPosts.data?.map(function (post, index) {
+          return (
+            <div className="card w-11/12 lg:w-7/12 my-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" key={index}>
+              <div className="card-body ">
+                <h2 className="card-title">{post.title}</h2>
+                <p className="font-mono ">{post.content}</p>
+                <div className="flex flex-col gap-2 mt-8">
+                  <div className="avatar">
+
+                    <div className="rw-24 w-14 rounded-full ring ring-green-200 ring-offset-base-100 ring-offset-2">
+                      <img src={post.user.image ?? ""} alt="" />
+                    </div>
+                  </div>
+                  <p className="font-bold">{post.user.name} </p>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
+          );
+        }).reverse()}
       </div>
       <Footer />
       <Nav active="home" />
