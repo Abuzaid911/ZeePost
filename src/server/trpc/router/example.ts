@@ -1,39 +1,55 @@
+// src/server/routers/example.ts
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { env } from "../../../env/server.mjs";
 import { router, publicProcedure } from "../trpc";
 
 export const exampleRouter = router({
-
   addPost: publicProcedure
     .input(
       z.object({
-        title: z.string().min(1), content: z.string().min(3),
+        title: z.string().min(1),
+        content: z.string().min(3),
       })
     )
     .mutation(async ({ input, ctx }) => {
       if (ctx.session?.user) {
-        return await ctx.prisma.post.create(
-          {
-            data: { title: input.title, content: input.content, userId: ctx.session?.user.id }
-          }
-
-        )
-
+        return await ctx.prisma.post.create({
+          data: {
+            title: input.title,
+            content: input.content,
+            userId: ctx.session?.user.id,
+          },
+        });
+      } else {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
       }
-      else {
-        throw new TRPCError({ code: 'UNAUTHORIZED' })
-      }
-
     }),
-  getPosts: publicProcedure
+  getPosts: publicProcedure.query(async ({ ctx }) => {
+    return await ctx.prisma.post.findMany({
+      include: {
+        user: true,
+      },
+    });
+  }),
+  deleteOldPosts: publicProcedure
     .input(
-      z.object({}).nullish()
-    ).query(async function ({ctx}) {
-      console.log("database url ",env.DATABASE_URL);
-      return await ctx.prisma.post.findMany({include:{user : true}});
-    })
+      z.object({
+        beforeDate: z.string(), // expecting date in ISO string format
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      if (ctx.session?.user) {
+        const beforeDate = new Date(input.beforeDate);
+        await ctx.prisma.post.deleteMany({
+          where: {
+            createdAt: {
+              lt: beforeDate,
+            },
+          },
+        });
+        return { success: true };
+      } else {
+        throw new TRPCError({ code: "UNAUTHORIZED" });
+      }
+    }),
 });
-
-//trpc = function that has an input and query
-//query = the process that will happen to the data 

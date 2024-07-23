@@ -1,22 +1,15 @@
-import { useState } from 'react';
-import { type NextPage } from 'next';
+import React from 'react';
+import { NextPage } from 'next';
 import Head from 'next/head';
 import { trpc } from '../utils/trpc';
 import Nav from '../components/nav';
 import NavTop from '../components/navtop';
 import Footer from '../components/footer';
-import Post, { PostType } from '../components/post';
+import Post from '../components/post';
 import Spinner from '../components/Spinner';
-
-interface Activity {
-  activity: string;
-  type: string;
-  participants: number;
-}
 
 const Home: NextPage = () => {
   const { data, isLoading, error } = trpc.example.getPosts.useQuery();
-  const [activity, setActivity] = useState<Activity | null>(null);
 
   if (isLoading) {
     return (
@@ -44,7 +37,7 @@ const Home: NextPage = () => {
       <div className="container mx-auto flex flex-col items-center">
         <div className="w-full md:w-2/3 lg:w-1/2 px-4">
           {data?.length ? (
-            data.slice().reverse().map((post: PostType) => (
+            data.slice().reverse().map((post) => (
               <Post key={post.id} post={post} />
             ))
           ) : (
