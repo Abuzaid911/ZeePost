@@ -2,7 +2,7 @@ import React from "react";
 import { FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import NavTop from "../components/navtop";
 import Nav from "../components/nav";
-import { NextPage } from "next";
+import type { NextPage } from "next";
 import Image from "next/image";
 
 // Social Media Links
@@ -24,7 +24,7 @@ const About: NextPage = () => {
                     <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">Hey!!</h1>
 
                     <p className="text-lg text-gray-600 dark:text-gray-300 font-medium mt-4 space-y-2">
-                        I'm Abuzaid! 👋 I'm the mastermind behind this operation xD.
+                        I&apos;m Abuzaid! 👋 I&apos;m the mastermind behind this operation xD.
                         <br></br>
                         A passionate creator who loves all things tech & design.
                         <br></br>
