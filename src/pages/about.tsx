@@ -51,7 +51,7 @@ const About: NextPage = () => {
                 {/* Right Side - Profile Image */}
                 <div className="relative rounded-full overflow-hidden w-48 h-48 mb-6 mx-auto md:mx-0 shadow-lg border-4 border-teal-400">
                     <Image
-                        src="https://avatars.githubusercontent.com/u/107811441?v=4"
+                        src="https://lh3.googleusercontent.com/a/ACg8ocJ2GwRzE-VXicY3hc9zoR5FnI5pna5DcVAa5IMzmECU2WQbB8-PfA=s576-c-no"
                         alt="Profile Picture"
                         width={192}
                         height={192}
