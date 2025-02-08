@@ -50,9 +50,7 @@ function NavTop() {
               key={path}
               href={path}
               className={`relative group transition-all ${
-                router.pathname === path
-                  ? "text-teal-400"
-                  : "text-gray-700 hover:text-teal-400"
+                router.pathname === path ? "text-teal-400" : "text-gray-700 hover:text-teal-400"
               }`}
             >
               {path === "/" ? "Home" : path === "/new" ? "New Post" : "About"}
@@ -69,7 +67,7 @@ function NavTop() {
 
             {/* ✅ Not Authenticated - Login Buttons */}
             {status === "unauthenticated" && (
-              <div className="flex space-x-2">
+              <div className="hidden md:flex space-x-2">
                 <button
                   aria-label="Sign in with Google"
                   className="p-2 bg-white border border-gray-300 rounded-full hover:scale-110 transition-all hover:bg-gray-200"
@@ -120,25 +118,50 @@ function NavTop() {
               </div>
             )}
           </NoSSR>
-        </div>
 
-        {/* ✅ Mobile Menu Button */}
-        <button className="md:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
-          {menuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
-        </button>
+          {/* ✅ Mobile Menu Button */}
+          <button className="md:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
+          </button>
+        </div>
       </div>
 
-      {/* ✅ Mobile Menu - Fullscreen Overlay */}
+      {/* ✅ Mobile Dropdown Menu */}
       {menuOpen && (
         <div
           ref={mobileMenuRef}
-          className="fixed inset-0 bg-white flex flex-col justify-center items-center space-y-6 text-lg transition-all duration-300"
+          className="md:hidden absolute top-full left-0 w-full bg-white shadow-md transition-all duration-300"
         >
           {["/", "/new", "/about"].map((path) => (
-            <Link key={path} href={path} className="text-gray-800 text-2xl" onClick={() => setMenuOpen(false)}>
+            <Link
+              key={path}
+              href={path}
+              className="block text-gray-800 text-lg px-6 py-4 border-b border-gray-200 hover:bg-gray-100"
+              onClick={() => setMenuOpen(false)}
+            >
               {path === "/" ? "Home" : path === "/new" ? "New Post" : "About"}
             </Link>
           ))}
+
+          {/* Mobile Auth Buttons */}
+          {status === "unauthenticated" && (
+            <div className="flex justify-center space-x-4 py-4">
+              <button
+                aria-label="Sign in with Google"
+                className="p-3 bg-gray-100 border border-gray-300 rounded-full hover:bg-gray-200 transition-all"
+                onClick={() => signIn("google")}
+              >
+                <GoogleIcon className="h-6 w-6 text-gray-600" />
+              </button>
+              <button
+                aria-label="Sign in with GitHub"
+                className="p-3 bg-gray-100 border border-gray-300 rounded-full hover:bg-gray-200 transition-all"
+                onClick={() => signIn("github")}
+              >
+                <GithubIcon className="h-6 w-6 text-gray-600" />
+              </button>
+            </div>
+          )}
         </div>
       )}
     </nav>
