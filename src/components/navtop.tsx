@@ -5,43 +5,18 @@ import GoogleIcon from "./GoogleIcon";
 import GithubIcon from "./GithubIcon";
 import ThemeToggle from "./ThemeToggle";
 import { FaUserCircle, FaSignOutAlt, FaSearch } from "react-icons/fa";
-import { useState, useEffect } from "react";
 
 function NavTop() {
   const { data: session, status } = useSession();
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-
-  // Handle Navbar Visibility on Scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > lastScrollY) {
-        setIsVisible(false); // Hide navbar when scrolling down
-      } else {
-        setIsVisible(true); // Show navbar when scrolling up
-      }
-      setLastScrollY(window.scrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY]);
 
   return (
-    <nav
-      className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 w-11/12 md:w-3/4 lg:w-2/3 
-                 bg-white/70 dark:bg-gray-900/70 backdrop-blur-2xl rounded-full shadow-lg 
-                 border border-gray-300 dark:border-gray-700 transition-all duration-300
-                 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-5 pointer-events-none"}`}
-    >
-      <div className="navbar container mx-auto flex justify-between items-center py-3 px-6">
+    <nav className="w-full bg-white dark:bg-gray-900 shadow-md border-b border-gray-300 dark:border-gray-700 transition-all duration-300 relative">
+      <div className="navbar container mx-auto flex justify-between items-center py-4 px-6">
         
         {/* Brand Logo */}
-        <Link href="/" className="text-3xl font-bold bg-gradient-to-r from-green-400 to-green-900 text-transparent bg-clip-text tracking-wide">
+        <Link href="/" className="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text tracking-wide">
           ZeePost
         </Link>
-
-
 
         {/* Right Section - Theme Toggle & Authentication */}
         <div className="flex items-center space-x-4">
