@@ -1,58 +1,66 @@
-import React from 'react';
-import { FaInstagram, FaLinkedinIn, FaTwitter, FaGithub } from 'react-icons/fa';
-import QRCode from 'qrcode.react';
+import React from "react";
+import { FaInstagram, FaLinkedinIn, FaPinterest, FaDribbble, FaBehance, FaXTwitter, } from "react-icons/fa6";
 import NavTop from "../components/navtop";
 import Nav from "../components/nav";
-import {NextPage} from "next";
-import Link from "next/link";
-import { IconType } from 'react-icons';
+import { NextPage } from "next";
 
-interface SocialLinkProps {
-    Icon: IconType; // Use IconType for the Icon prop
-    text: string;
-    url: string;
-}
-const About:NextPage = () => {
-    const description = "My name is Abuzaid and I am the brain behind this operation xD. I am a one-man team with a love for all things and a passion for creating awesome designs (and a lot more fun). Thank you for being here. I hope you enjoy using this app as much as I enjoyed creating it."; // Replace with your actual description
+// Social Media Links
+const socialLinks = [
+    { Icon: FaLinkedinIn, url: "https://www.linkedin.com", color: "#0077b5" },
+    { Icon: FaXTwitter, url: "https://twitter.com", color: "#000000" },
+    { Icon: FaInstagram, url: "https://www.instagram.com", color: "#E4405F" },
+];
 
+// About Component
+const About: NextPage = () => {
     return (
         <>
             <NavTop />
-            <div className="min-h-screen bg-white flex flex-col md:flex-row items-center justify-center p-4 gap-8 ">
-                <div className="flex flex-col items-center">
-                    <div className="space-y-2 mb-4">
-                        <SocialLink Icon={FaLinkedinIn} text="LinkedIn" url="https://www.linkedin.com/in/ahmed-abuzaid-a65732185/" />
-                        <SocialLink Icon={FaGithub} text="GitHub" url="https://github.com/Abuzaid911" />
-                        <SocialLink Icon={FaInstagram} text="Instagram" url="https://www.instagram.com/ahmedabuzaids/" />
-                        <SocialLink Icon={FaTwitter} text="Twitter" url="https://twitter.com/ahmedwallahi?s=21&t=pz7e97LWT3QpMitZRWSbTg" />
+            <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col md:flex-row items-center justify-center p-10 gap-12">
+
+                {/* Left Side - Profile Info */}
+                <div className="text-center md:text-left">
+                    <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">Hey!!</h1>
+                    {/* <h2 className="text-5xl font-extrabold text-gray-900 dark:text-gray-100 mt-2">UI-UX Designers</h2> */}
+
+                    <p className="text-lg text-gray-600 dark:text-gray-300 font-medium mt-4">
+                        I'm Abuzaid! 👋 I'm the mastermind behind this operation xD.
+                        <br></br>
+                        A passionate creator who loves all things tech & design.
+                        <br></br>
+                        I hope you enjoy using this app as much as I loved building it!
+                    </p>
+
+                    {/* Social Media Links */}
+                    <div className="flex space-x-4 mt-6 justify-center md:justify-start">
+                        {socialLinks.map(({ Icon, url, color }, index) => (
+                            <a
+                                key={index}
+                                href={"url"}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="p-3 rounded-full shadow-md transition-all transform hover:scale-110"
+                                style={{ backgroundColor: color }}
+                            >
+                                <Icon className="text-white text-xl" />
+                            </a>
+                        ))}
                     </div>
-                    {/*<div className="shadow-lg">*/}
-                    {/*    <QRCode value="https://abuzaid.vercel.app/" size={96} />*/}
-                    {/*</div>*/}
                 </div>
-                <div className="max-w-md text-center md:text-left">
-                    <div className="rounded-full overflow-hidden w-48 h-48 mb-4 mx-auto md:mx-0">
-                        <img src="https://avatars.githubusercontent.com/u/107811441?v=4" alt="Profile" className="object-cover w-full h-full" />
+
+                {/* Right Side - Profile Illustration */}
+                <div className="relative rounded-full overflow-hidden w-48 h-48 mb-6 mx-auto md:mx-0 shadow-lg border-4 border-teal-400">
+                        <img 
+                            src="https://avatars.githubusercontent.com/u/107811441?v=4" 
+                            alt="Profile"
+                            className="object-cover w-full h-full"
+                        />
                     </div>
-                    {/*<h2 className="text-3xl font-semibold mb-2 ml-6 font-mono">@ABUZAID</h2>*/}
-                    <p className="font-mono bg-gradient-to-r from-green-400 to-black text-transparent bg-clip-text">{description}</p>
-                </div>
+
             </div>
             <Nav active="about" />
         </>
     );
 };
-
-const SocialLink=(({ Icon, text, url }: SocialLinkProps) => {
-    return (
-        <>
-        <a href={url} className="flex items-center justify-center bg-teal-300 rounded-full py-2 px-4 hover:bg-teal-400 transition-colors w-40"
-           target="_blank" rel="noopener noreferrer">
-            <Icon className="text-white text-xl" />
-            <span className="ml-2 text-white font-semibold">{text}</span>
-        </a>
-        </>
-    );
-});
 
 export default About;
