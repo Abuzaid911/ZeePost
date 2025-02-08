@@ -1,8 +1,9 @@
 import React from "react";
-import { FaInstagram, FaLinkedinIn, FaPinterest, FaDribbble, FaBehance, FaXTwitter, } from "react-icons/fa6";
+import { FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import NavTop from "../components/navtop";
 import Nav from "../components/nav";
 import { NextPage } from "next";
+import Image from "next/image";
 
 // Social Media Links
 const socialLinks = [
@@ -21,9 +22,8 @@ const About: NextPage = () => {
                 {/* Left Side - Profile Info */}
                 <div className="text-center md:text-left">
                     <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">Hey!!</h1>
-                    {/* <h2 className="text-5xl font-extrabold text-gray-900 dark:text-gray-100 mt-2">UI-UX Designers</h2> */}
 
-                    <p className="text-lg text-gray-600 dark:text-gray-300 font-medium mt-4">
+                    <p className="text-lg text-gray-600 dark:text-gray-300 font-medium mt-4 space-y-2">
                         I'm Abuzaid! 👋 I'm the mastermind behind this operation xD.
                         <br></br>
                         A passionate creator who loves all things tech & design.
@@ -36,7 +36,7 @@ const About: NextPage = () => {
                         {socialLinks.map(({ Icon, url, color }, index) => (
                             <a
                                 key={index}
-                                href={"url"}
+                                href={url}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="p-3 rounded-full shadow-md transition-all transform hover:scale-110"
@@ -48,14 +48,16 @@ const About: NextPage = () => {
                     </div>
                 </div>
 
-                {/* Right Side - Profile Illustration */}
+                {/* Right Side - Profile Image */}
                 <div className="relative rounded-full overflow-hidden w-48 h-48 mb-6 mx-auto md:mx-0 shadow-lg border-4 border-teal-400">
-                        <img 
-                            src="https://avatars.githubusercontent.com/u/107811441?v=4" 
-                            alt="Profile"
-                            className="object-cover w-full h-full"
-                        />
-                    </div>
+                    <Image
+                        src="https://avatars.githubusercontent.com/u/107811441?v=4"
+                        alt="Profile Picture"
+                        width={192}
+                        height={192}
+                        className="object-cover w-full h-full rounded-full"
+                    />
+                </div>
 
             </div>
             <Nav active="about" />
