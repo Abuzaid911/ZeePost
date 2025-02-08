@@ -111,7 +111,7 @@ const Home: NextPage = () => {
         {/* ✅ Load More Button - Animated */}
         {posts && visiblePosts < posts.length && (
           <motion.button
-            onClick={() => setVisiblePosts(visiblePosts + 5)}
+            onClick={() => setVisiblePosts(visiblePosts + 8)}
             className="mt-12 px-10 py-3 bg-teal-400 text-white rounded-full shadow-lg hover:bg-green-600 transition-all text-lg tracking-wide animate-pulse hover:animate-none"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
