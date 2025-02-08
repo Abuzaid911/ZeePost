@@ -61,17 +61,6 @@ function NavTop() {
           ))}
         </div>
 
-        {/* ✅ New Post Button */}
-        {status === "authenticated" && (
-          <Link
-            href="/new"
-            className="absolute right-1/2 md:right-auto md:relative md:block -translate-x-1/2 md:translate-x-0 bottom-4 md:bottom-auto bg-teal-400 hover:bg-teal-400 text-white rounded-full p-3 shadow-md transition-all hover:scale-105"
-          >
-            <FaPlus className="md:hidden" />
-            <span className="hidden md:inline">New Post</span>
-          </Link>
-        )}
-
         {/* ✅ Right Section - Authentication */}
         <div className="flex items-center space-x-3">
           <NoSSR>
