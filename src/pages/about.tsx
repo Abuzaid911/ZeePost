@@ -17,13 +17,13 @@ const About: NextPage = () => {
     return (
         <>
             <NavTop />
-            <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col md:flex-row items-center justify-center p-10 gap-12">
+            <div className="min-h-screen bg-white flex flex-col md:flex-row items-center justify-center p-10 gap-12">
 
                 {/* Left Side - Profile Info */}
                 <div className="text-center md:text-left">
-                    <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">Hey!!</h1>
+                    <h1 className="text-4xl font-bold text-gray-900 ">Hey!!</h1>
 
-                    <p className="text-lg text-gray-600 dark:text-gray-300 font-medium mt-4 space-y-2">
+                    <p className="text-lg text-green-800 font-medium mt-4 space-y-2">
                         I&apos;m Abuzaid! 👋 I&apos;m the mastermind behind this operation xD.
                         <br></br>
                         A passionate creator who loves all things tech & design.
@@ -60,7 +60,7 @@ const About: NextPage = () => {
                 </div>
 
             </div>
-            <Nav active="about" />
+            {/* <Nav active="about" />  */}
         </>
     );
 };

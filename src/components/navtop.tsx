@@ -3,67 +3,155 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import NoSSR from "./NoSSR";
 import GoogleIcon from "./GoogleIcon";
 import GithubIcon from "./GithubIcon";
-import ThemeToggle from "./ThemeToggle";
-import { FaUserCircle, FaSignOutAlt, FaSearch } from "react-icons/fa";
+import { FaBars, FaTimes, FaUserCircle, FaSignOutAlt, FaPlus } from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import gsap from "gsap";
 
 function NavTop() {
   const { data: session, status } = useSession();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const mobileMenuRef = useRef(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (menuOpen && mobileMenuRef.current) {
+      gsap.fromTo(
+        mobileMenuRef.current,
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power1.out" }
+      );
+    }
+  }, [menuOpen]);
 
   return (
-    <nav className="w-full bg-white dark:bg-gray-900 shadow-md border-b border-gray-300 dark:border-gray-700 transition-all duration-300 relative">
-      <div className="navbar container mx-auto flex justify-between items-center py-4 px-6">
-        
-        {/* Brand Logo */}
-        <Link href="/" className="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-500 text-transparent bg-clip-text tracking-wide">
-          ZeePost
+    <nav
+      className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${
+        isScrolled ? "bg-white shadow-md border-b border-gray-200" : "bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto flex justify-between items-center py-4 px-6 relative">
+        {/* ✅ Logo */}
+        <Link href="/" className="text-3xl font-bold transition-all tracking-wide">
+          <span className="text-green-500 font-mono hover:scale-105 transition-transform">ZeePost</span>
         </Link>
 
-        {/* Right Section - Theme Toggle & Authentication */}
-        <div className="flex items-center space-x-4">
-          
-          {/* Dark Mode Toggle */}
-          <ThemeToggle />
+        {/* ✅ Desktop Navigation */}
+        <div className="hidden md:flex space-x-6">
+          {["/", "/new", "/about"].map((path) => (
+            <Link
+              key={path}
+              href={path}
+              className={`relative group transition-all ${
+                router.pathname === path
+                  ? "text-green-500"
+                  : "text-gray-700 hover:text-green-500"
+              }`}
+            >
+              {path === "/" ? "Home" : path === "/new" ? "New Post" : "About"}
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+            </Link>
+          ))}
+        </div>
 
+        {/* ✅ New Post Button */}
+        {status === "authenticated" && (
+          <Link
+            href="/new"
+            className="absolute right-1/2 md:right-auto md:relative md:block -translate-x-1/2 md:translate-x-0 bottom-4 md:bottom-auto bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-md transition-all hover:scale-105"
+          >
+            <FaPlus className="md:hidden" />
+            <span className="hidden md:inline">New Post</span>
+          </Link>
+        )}
+
+        {/* ✅ Right Section - Authentication */}
+        <div className="flex items-center space-x-3">
           <NoSSR>
-            {/* Loading State */}
-            {status === "loading" && <button className="btn btn-square bg-green-200 loading"></button>}
+            {/* ✅ Loading State */}
+            {status === "loading" && <span className="loading loading-spinner text-green-500"></span>}
 
-            {/* Not Authenticated - Show Login Options */}
+            {/* ✅ Not Authenticated - Login Buttons */}
             {status === "unauthenticated" && (
-              <div className="flex space-x-3">
-                <button className="p-2 bg-white dark:bg-gray-800 shadow-md rounded-full hover:scale-110 transition-all hover:shadow-green-500" onClick={() => signIn("google")}>
-                  <GoogleIcon className="h-5 w-5" />
+              <div className="flex space-x-2">
+                <button
+                  aria-label="Sign in with Google"
+                  className="p-2 bg-white border border-gray-300 rounded-full hover:scale-110 transition-all hover:bg-gray-200"
+                  onClick={() => signIn("google")}
+                >
+                  <GoogleIcon className="h-5 w-5 text-gray-600" />
                 </button>
-                <button className="p-2 bg-white dark:bg-gray-800 shadow-md rounded-full hover:scale-110 transition-all hover:shadow-blue-500" onClick={() => signIn("github")}>
-                  <GithubIcon className="h-5 w-5" />
+                <button
+                  aria-label="Sign in with GitHub"
+                  className="p-2 bg-white border border-gray-300 rounded-full hover:scale-110 transition-all hover:bg-gray-200"
+                  onClick={() => signIn("github")}
+                >
+                  <GithubIcon className="h-5 w-5 text-gray-600" />
                 </button>
               </div>
             )}
 
-            {/* Authenticated - Profile Dropdown */}
+            {/* ✅ Authenticated User - Profile Dropdown */}
             {status === "authenticated" && session?.user?.image && (
-              <div className="dropdown dropdown-end">
-                <label tabIndex={0} className="btn btn-ghost btn-circle avatar hover:scale-110 transition-all">
-                  <div className="w-12 rounded-full border-2 border-transparent group-hover:border-green-500 transition-all">
-                    <img src={session.user.image} alt="User Profile" className="rounded-full transition-all hover:ring-2 hover:ring-green-500" />
+              <div className="relative">
+                <button
+                  className="flex items-center space-x-2 text-gray-700 hover:text-green-500 transition-all font-medium"
+                  onClick={() => setMenuOpen(!menuOpen)}
+                >
+                  <img
+                    src={session.user.image}
+                    alt="User Profile"
+                    className="w-8 h-8 rounded-full border-2 border-transparent hover:border-green-500 transition-all"
+                  />
+                </button>
+
+                {/* ✅ Dropdown Menu */}
+                {menuOpen && (
+                  <div className="absolute right-0 mt-3 w-48 bg-white shadow-xl rounded-lg">
+                    <div className="flex items-center p-3 border-b border-gray-200">
+                      <FaUserCircle className="text-gray-700 text-lg mr-2" />
+                      <span className="text-gray-800 font-medium">{session.user.name}</span>
+                    </div>
+                    <button
+                      onClick={() => signOut()}
+                      className="flex items-center w-full text-left p-3 text-red-500 hover:bg-gray-100 rounded-b-lg transition-all"
+                    >
+                      <FaSignOutAlt className="mr-2" />
+                      Logout
+                    </button>
                   </div>
-                </label>
-                <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-3 shadow-xl bg-white dark:bg-gray-900 rounded-lg w-56">
-                  <li className="flex items-center p-2 border-b border-gray-300 dark:border-gray-700">
-                    <FaUserCircle className="text-gray-700 dark:text-gray-300 text-lg mr-2" />
-                    <span className="text-gray-800 dark:text-gray-200 font-medium">{session.user.name}</span>
-                  </li>
-                  <li onClick={() => signOut()} className="flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-lg transition-all">
-                    <FaSignOutAlt className="text-red-500 mr-2" />
-                    <span className="text-gray-800 dark:text-gray-200">Logout</span>
-                  </li>
-                </ul>
+                )}
               </div>
             )}
           </NoSSR>
         </div>
 
+        {/* ✅ Mobile Menu Button */}
+        <button className="md:hidden text-gray-700" onClick={() => setMenuOpen(!menuOpen)}>
+          {menuOpen ? <FaTimes className="text-2xl" /> : <FaBars className="text-2xl" />}
+        </button>
       </div>
+
+      {/* ✅ Mobile Menu - Fullscreen Overlay */}
+      {menuOpen && (
+        <div
+          ref={mobileMenuRef}
+          className="fixed inset-0 bg-white flex flex-col justify-center items-center space-y-6 text-lg transition-all duration-300"
+        >
+          {["/", "/new", "/about"].map((path) => (
+            <Link key={path} href={path} className="text-gray-800 text-2xl" onClick={() => setMenuOpen(false)}>
+              {path === "/" ? "Home" : path === "/new" ? "New Post" : "About"}
+            </Link>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }

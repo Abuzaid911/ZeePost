@@ -3,7 +3,6 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { trpc } from "../utils/trpc";
 import "../styles/globals.css";
-import { darkMode } from "../../tailwind.config.cjs";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,

@@ -1,41 +1,33 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
-import { FaHome, FaPlus, FaUser } from "react-icons/fa";
-import { useEffect, useState } from "react";
+import { FaHome, FaSearch, FaPlusSquare, FaHeart, FaUser } from "react-icons/fa";
 
 const navItems = [
-    { id: "home", path: "/", icon: <FaHome className="text-xl" />, label: "Home" },
-    { id: "add", path: "/new", icon: <FaPlus className="text-xl" />, label: "Add" },
-    { id: "about", path: "/about", icon: <FaUser className="text-xl" />, label: "About" }
+  { id: "home", path: "/", icon: <FaHome />, label: "Home" },
+  { id: "search", path: "/search", icon: <FaSearch />, label: "Search" },
+  { id: "add", path: "/new", icon: <FaPlusSquare />, label: "Add" },
+  { id: "favorites", path: "/favorites", icon: <FaHeart />, label: "Favorites" },
+  { id: "profile", path: "/profile", icon: <FaUser />, label: "Profile" },
 ];
 
-function Nav({ active }: { active: string }) {
-    const router = useRouter();
-    const [darkMode, setDarkMode] = useState(false);
+function BottomNav() {
+  const router = useRouter();
 
-    // Check user's system preference for dark mode
-    useEffect(() => {
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        setDarkMode(prefersDark);
-        document.documentElement.classList.toggle("dark", prefersDark);
-    }, []);
-
-    return (
-        <nav className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white dark:bg-gray-900 shadow-md py-3 border-t border-gray-200 dark:border-gray-700 transition-all duration-300">
-            {navItems.map((item) => (
-                <button
-                    key={item.id}
-                    onClick={() => router.push(item.path)}
-                    className={`flex flex-col items-center px-4 py-2 transition-all duration-300 
-                                ${active === item.id 
-                                    ? "text-green-400 font-bold border-b-4 border-green-600 scale-110" 
-                                    : "text-gray-500 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400"}`}
-                >
-                    {item.icon}
-                    <span className="text-xs mt-1">{item.label}</span>
-                </button>
-            ))}
-        </nav>
-    );
+  return (
+    <nav className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-lg bg-black/80 dark:bg-gray-900/80 backdrop-blur-md rounded-t-xl shadow-lg border-t border-purple-500 flex justify-around py-3 px-6">
+      {navItems.map(({ id, path, icon }) => (
+        <Link key={id} href={path} className="group">
+          <div
+            className={`flex flex-col items-center text-gray-500 transition-all duration-300 ${
+              router.pathname === path ? "text-purple-400 scale-110" : "hover:text-white"
+            }`}
+          >
+            <span className="text-2xl">{icon}</span>
+          </div>
+        </Link>
+      ))}
+    </nav>
+  );
 }
 
-export default Nav;
+export default BottomNav;

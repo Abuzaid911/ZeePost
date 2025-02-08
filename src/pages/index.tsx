@@ -1,36 +1,40 @@
 import type { NextPage } from "next";
 import { trpc } from "../utils/trpc";
-import Nav from "../components/nav";
 import NavTop from "../components/navtop";
-import Footer from "../components/footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion } from "framer-motion"; // ✅ Import Framer Motion for animations
 
 const Home: NextPage = () => {
   const { data: posts, isLoading, isError, refetch } = trpc.example.getPosts.useQuery();
   const [visiblePosts, setVisiblePosts] = useState(5);
+  const [hasLoaded, setHasLoaded] = useState(false); // ✅ Prevent animation reloading
+
+  useEffect(() => {
+    setHasLoaded(true); // ✅ Set flag to trigger animations once
+  }, []);
 
   return (
     <>
       <NavTop />
-      <div className="container mx-auto px-6 py-12 pt-24"> {/* ✅ Added `pt-24` to fix navbar overlap */}
+      <div className="container mx-auto px-6 py-12 pt-24 min-h-screen">
         
-        {/* Loading State */}
+        {/* ✅ Loading State - Pulsing Animation */}
         {isLoading && (
           <div className="flex flex-col items-center justify-center h-screen animate-fade-in">
             <div className="relative flex items-center justify-center">
-              <span className="absolute animate-ping h-12 w-12 rounded-full bg-green-500 opacity-75"></span>
-              <span className="relative inline-block w-12 h-12 bg-green-500 rounded-full"></span>
+              <span className="absolute animate-ping h-16 w-16 rounded-full bg-green-500 opacity-75"></span>
+              <span className="relative inline-block w-16 h-16 bg-green-500 rounded-full"></span>
             </div>
-            <p className="text-2xl font-semibold text-gray-800 dark:text-gray-300 mt-6 tracking-wide">
-              Loading the latest posts...
+            <p className="text-2xl font-semibold text-gray-800 mt-6 tracking-wide">
+              Fetching fresh content...
             </p>
           </div>
         )}
 
-        {/* Error State */}
+        {/* ✅ Error State */}
         {isError && (
           <div className="text-center text-red-500 mt-12">
-            <p className="text-xl font-semibold">Something went wrong.</p>
+            <p className="text-xl font-semibold">Oops! Something went wrong.</p>
             <button 
               onClick={() => refetch()} 
               className="mt-4 px-8 py-3 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 transition-all"
@@ -40,7 +44,7 @@ const Home: NextPage = () => {
           </div>
         )}
 
-        {/* Empty State */}
+        {/* ✅ Empty State */}
         {!isLoading && !isError && posts?.length === 0 && (
           <div className="text-center mt-12 animate-fade-in">
             <img
@@ -49,31 +53,41 @@ const Home: NextPage = () => {
               className="mx-auto mb-6 w-52 opacity-80"
               loading="lazy"
             />
-            <p className="text-xl text-gray-800 dark:text-gray-300 font-medium">
-              Be the first to post something amazing!
+            <p className="text-xl text-gray-800 font-medium">
+              Looks like no one has posted yet. Be the first!
             </p>
-            <button className="mt-6 px-8 py-3 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 transition-all">
-              Create Your First Post
+            <button 
+              className="mt-6 px-8 py-3 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 transition-all"
+            >
+              Write Your First Post
             </button>
           </div>
         )}
 
-        {/* Post Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {posts?.slice().reverse().slice(0, visiblePosts).map((post) => (
-            <div
+        {/* ✅ Post Grid - Animated on Load */}
+        <motion.div 
+          className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: hasLoaded ? 1 : 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {posts?.slice().reverse().slice(0, visiblePosts).map((post, index) => (
+            <motion.div
               key={post.id}
-              className="relative group bg-white dark:bg-gray-900 rounded-2xl shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-300 dark:border-gray-700 p-6 
-                         backdrop-blur-xl bg-opacity-80 dark:bg-opacity-80"
+              className="relative group bg-white rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-2 border border-gray-300 p-6 
+                        backdrop-blur-xl bg-opacity-80 hover:ring-2 hover:ring-green-400"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1, duration: 0.3 }} // ✅ Staggered animation for posts
             >
-              <h2 className="text-2xl font-extrabold mb-4 text-gray-900 dark:text-gray-100 tracking-wide">
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 tracking-wide">
                 {post.title}
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-700 leading-relaxed">
                 {post.content}
               </p>
 
-              {/* Author Info */}
+              {/* ✅ Author Info */}
               <div className="flex items-center mt-6">
                 <div className="relative">
                   <img
@@ -85,27 +99,28 @@ const Home: NextPage = () => {
                   <div className="absolute inset-0 rounded-full border-2 border-green-400 animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <div className="ml-4">
-                  <p className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
+                  <p className="font-semibold text-gray-900 text-lg">
                     {post.user?.name}
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Load More Button */}
+        {/* ✅ Load More Button - Animated */}
         {posts && visiblePosts < posts.length && (
-          <button
+          <motion.button
             onClick={() => setVisiblePosts(visiblePosts + 5)}
-            className="mt-12 px-10 py-3 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 transition-all text-lg tracking-wide"
+            className="mt-12 px-10 py-3 bg-green-500 text-white rounded-full shadow-lg hover:bg-green-600 transition-all text-lg tracking-wide animate-pulse hover:animate-none"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
           >
             Load More Posts
-          </button>
+          </motion.button>
         )}
       </div>
-      <Footer />
-      <Nav active="home" />
     </>
   );
 };

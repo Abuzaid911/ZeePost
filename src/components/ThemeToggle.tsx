@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const ThemeToggle = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -6,11 +7,14 @@ const ThemeToggle = () => {
   // Sync Dark Mode with Local Storage and System Preferences
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
+
     if (savedTheme) {
-      setDarkMode(savedTheme === "light");
+      setDarkMode(savedTheme === "dark");
     } else {
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      setDarkMode(prefersDark);
+      // Default to light mode even if system prefers dark
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+      setDarkMode(false);
     }
   }, []);
 
@@ -25,14 +29,20 @@ const ThemeToggle = () => {
   }, [darkMode]);
 
   return (
-    <label className="flex items-center cursor-pointer gap-2 px-3 py-1 bg-white dark:bg-gray-900 rounded-full transition-all duration-300">
-      <input
-        type="checkbox"
-        checked={darkMode}
-        onChange={() => setDarkMode(!darkMode)}
-        className="toggle theme-controller transition-all duration-300 dark:bg-gray-900 bg-green-300 border-green-900"
-      />
-    </label>
+    <button
+      onClick={() => setDarkMode(!darkMode)}
+      aria-label="Toggle Dark Mode"
+      className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-900 rounded-full hover:scale-105 transition-all"
+    >
+      {darkMode ? (
+        <FaSun className="text-yellow-100 text-xl" />
+      ) : (
+        <FaMoon className="text-gray-600 dark:text-gray-300 text-xl" />
+      )}
+      {/* <span className="text-gray-700 dark:text-gray-200 text-sm font-medium">
+        {darkMode ? "Dark Mode" : "Dark Mode"}
+      </span> */}
+    </button>
   );
 };
 

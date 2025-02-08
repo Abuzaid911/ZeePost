@@ -158,7 +158,7 @@ const NewPost: NextPage = () => {
         </div>
       </main>
       
-      <Nav active="add" />
+      {/* <Nav active="add" />  */}
     </div>
   );
 };
