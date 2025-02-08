@@ -1,28 +1,40 @@
 import { useRouter } from "next/router";
+import { FaHome, FaPlus, FaUser } from "react-icons/fa";
+import { useEffect, useState } from "react";
 
-function Nav({active}:{active:string}) {
+const navItems = [
+    { id: "home", path: "/", icon: <FaHome className="text-xl" />, label: "Home" },
+    { id: "add", path: "/new", icon: <FaPlus className="text-xl" />, label: "Add" },
+    { id: "about", path: "/about", icon: <FaUser className="text-xl" />, label: "About" }
+];
 
+function Nav({ active }: { active: string }) {
     const router = useRouter();
+    const [darkMode, setDarkMode] = useState(false);
+
+    // Check user's system preference for dark mode
+    useEffect(() => {
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        setDarkMode(prefersDark);
+        document.documentElement.classList.toggle("dark", prefersDark);
+    }, []);
 
     return (
-        <div className="btm-nav ">
-            <button onClick={() => router.push("/")} className={"text-success " + (active === "home"? "active":"")}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-            </button>
-
-            <button onClick={() => router.push("/new")} className={"text-success " + (active === "add"? "active":"")}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-            </button>
-
-            <button onClick={() => router.push("/about")} className={"text-success " + (active === "about"? "active":"")}>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            </button>
-
-        </div>
-
-
+        <nav className="fixed bottom-0 left-0 right-0 flex justify-around items-center bg-white dark:bg-gray-900 shadow-md py-3 border-t border-gray-200 dark:border-gray-700 transition-all duration-300">
+            {navItems.map((item) => (
+                <button
+                    key={item.id}
+                    onClick={() => router.push(item.path)}
+                    className={`flex flex-col items-center px-4 py-2 transition-all duration-300 
+                                ${active === item.id 
+                                    ? "text-green-400 font-bold border-b-4 border-green-600 scale-110" 
+                                    : "text-gray-500 dark:text-gray-300 hover:text-green-700 dark:hover:text-green-400"}`}
+                >
+                    {item.icon}
+                    <span className="text-xs mt-1">{item.label}</span>
+                </button>
+            ))}
+        </nav>
     );
 }
 
