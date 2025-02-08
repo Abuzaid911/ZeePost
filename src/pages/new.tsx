@@ -5,7 +5,6 @@ import { useSession } from 'next-auth/react';
 import { Send, Loader2 } from 'lucide-react';
 import { trpc } from '../utils/trpc';
 import NavTop from '../components/navtop';
-import Nav from '../components/nav';
 
 const NewPost: NextPage = () => {
   const [formData, setFormData] = React.useState({
@@ -71,22 +70,22 @@ const NewPost: NextPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50">
       <NavTop />
       
       <main className="container mx-auto px-4 pt-20 pb-24">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+          <h1 className="text-2xl font-bold text-gray-900 mb-6">
             Create New Post
           </h1>
           
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4 rounded-lg bg-white dark:bg-gray-800 p-6 shadow-sm border border-gray-200 dark:border-gray-700">
+            <div className="space-y-4 rounded-lg bg-white p-6 shadow-sm border border-gray-200">
               {/* Title Input */}
               <div>
                 <label 
                   htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Title
                 </label>
@@ -97,10 +96,10 @@ const NewPost: NextPage = () => {
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="Enter your post title..."
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-                    bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
-                    placeholder-gray-500 dark:placeholder-gray-400
-                    focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 
+                    bg-white text-gray-900
+                    placeholder-gray-500
+                    focus:ring-2 focus:ring-teal-400 
                     focus:border-transparent outline-none transition-shadow"
                   maxLength={100}
                 />
@@ -110,7 +109,7 @@ const NewPost: NextPage = () => {
               <div>
                 <label 
                   htmlFor="content"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                  className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Content
                 </label>
@@ -122,10 +121,10 @@ const NewPost: NextPage = () => {
                   onChange={handleChange}
                   placeholder="Share your thoughts..."
                   rows={1}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 
-                    bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100
-                    placeholder-gray-500 dark:placeholder-gray-400
-                    focus:ring-2 focus:ring-green-500 dark:focus:ring-green-400 
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 
+                    bg-white text-gray-900
+                    placeholder-gray-500
+                    focus:ring-2 focus:ring-teal-400 
                     focus:border-transparent outline-none transition-shadow
                     font-mono resize-none"
                 />
@@ -137,8 +136,7 @@ const NewPost: NextPage = () => {
               type="submit"
               disabled={isSubmitting}
               className="w-full flex items-center justify-center gap-2 px-6 py-3 
-                bg-green-500 hover:bg-green-600 active:bg-green-700
-                dark:bg-green-600 dark:hover:bg-green-700 dark:active:bg-green-800
+                bg-teal-400 hover:bg-teal-500 active:bg-teal-600
                 text-white font-medium rounded-lg transition-colors
                 disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -157,8 +155,6 @@ const NewPost: NextPage = () => {
           </form>
         </div>
       </main>
-      
-      {/* <Nav active="add" />  */}
     </div>
   );
 };

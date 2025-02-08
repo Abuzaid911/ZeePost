@@ -40,7 +40,7 @@ function NavTop() {
       <div className="container mx-auto flex justify-between items-center py-4 px-6 relative">
         {/* ✅ Logo */}
         <Link href="/" className="text-3xl font-bold transition-all tracking-wide">
-          <span className="text-green-500 font-mono hover:scale-105 transition-transform">ZeePost</span>
+          <span className="text-teal-400 font-mono hover:scale-105 transition-transform">ZeePost</span>
         </Link>
 
         {/* ✅ Desktop Navigation */}
@@ -51,12 +51,12 @@ function NavTop() {
               href={path}
               className={`relative group transition-all ${
                 router.pathname === path
-                  ? "text-green-500"
-                  : "text-gray-700 hover:text-green-500"
+                  ? "text-teal-400"
+                  : "text-gray-700 hover:text-teal-400"
               }`}
             >
               {path === "/" ? "Home" : path === "/new" ? "New Post" : "About"}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-green-500 transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-400 transition-all duration-300 group-hover:w-full"></span>
             </Link>
           ))}
         </div>
@@ -65,7 +65,7 @@ function NavTop() {
         {status === "authenticated" && (
           <Link
             href="/new"
-            className="absolute right-1/2 md:right-auto md:relative md:block -translate-x-1/2 md:translate-x-0 bottom-4 md:bottom-auto bg-green-500 hover:bg-green-600 text-white rounded-full p-3 shadow-md transition-all hover:scale-105"
+            className="absolute right-1/2 md:right-auto md:relative md:block -translate-x-1/2 md:translate-x-0 bottom-4 md:bottom-auto bg-teal-400 hover:bg-teal-400 text-white rounded-full p-3 shadow-md transition-all hover:scale-105"
           >
             <FaPlus className="md:hidden" />
             <span className="hidden md:inline">New Post</span>
@@ -76,7 +76,7 @@ function NavTop() {
         <div className="flex items-center space-x-3">
           <NoSSR>
             {/* ✅ Loading State */}
-            {status === "loading" && <span className="loading loading-spinner text-green-500"></span>}
+            {status === "loading" && <span className="loading loading-spinner text-teal-400"></span>}
 
             {/* ✅ Not Authenticated - Login Buttons */}
             {status === "unauthenticated" && (
@@ -102,13 +102,13 @@ function NavTop() {
             {status === "authenticated" && session?.user?.image && (
               <div className="relative">
                 <button
-                  className="flex items-center space-x-2 text-gray-700 hover:text-green-500 transition-all font-medium"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-teal-400 transition-all font-medium"
                   onClick={() => setMenuOpen(!menuOpen)}
                 >
                   <img
                     src={session.user.image}
                     alt="User Profile"
-                    className="w-8 h-8 rounded-full border-2 border-transparent hover:border-green-500 transition-all"
+                    className="w-8 h-8 rounded-full border-2 border-transparent hover:border-teal-400 transition-all"
                   />
                 </button>
 
