@@ -70,22 +70,22 @@ const NewPost: NextPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-dark-primary">
       <NavTop />
       
       <main className="container mx-auto px-4 pt-20 pb-24">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-2xl font-bold text-gray-900 mb-6">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-dark-text mb-6">
             Create New Post
           </h1>
           
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="space-y-4 rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+            <div className="space-y-4 rounded-lg bg-white dark:bg-dark-secondary p-6 shadow-sm border border-gray-200 dark:border-gray-600">
               {/* Title Input */}
               <div>
                 <label 
                   htmlFor="title"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
                   Title
                 </label>
@@ -96,10 +96,10 @@ const NewPost: NextPage = () => {
                   value={formData.title}
                   onChange={handleChange}
                   placeholder="Enter your post title..."
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 
-                    bg-white text-gray-900
-                    placeholder-gray-500
-                    focus:ring-2 focus:ring-teal-400 
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600
+                    bg-white dark:bg-dark-secondary text-gray-900 dark:text-dark-text
+                    placeholder-gray-500 dark:placeholder-gray-400
+                    focus:ring-2 focus:ring-teal-400 dark:focus:ring-teal-500
                     focus:border-transparent outline-none transition-shadow"
                   maxLength={100}
                 />
@@ -109,7 +109,7 @@ const NewPost: NextPage = () => {
               <div>
                 <label 
                   htmlFor="content"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                 >
                   Content
                 </label>
@@ -121,10 +121,10 @@ const NewPost: NextPage = () => {
                   onChange={handleChange}
                   placeholder="Share your thoughts..."
                   rows={1}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 
-                    bg-white text-gray-900
-                    placeholder-gray-500
-                    focus:ring-2 focus:ring-teal-400 
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600
+                    bg-white dark:bg-dark-secondary text-gray-900 dark:text-dark-text
+                    placeholder-gray-500 dark:placeholder-gray-400
+                    focus:ring-2 focus:ring-teal-400 dark:focus:ring-teal-500
                     focus:border-transparent outline-none transition-shadow
                     font-mono resize-none"
                 />

@@ -35,7 +35,7 @@ function NavTop() {
   return (
     <nav
       className={`w-full fixed top-0 left-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md border-b border-gray-200" : "bg-transparent"
+        isScrolled ? "bg-white dark:bg-dark-secondary shadow-md border-b border-gray-200 dark:border-gray-600" : "bg-transparent"
       }`}
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-6 relative">
