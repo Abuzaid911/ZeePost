@@ -2,36 +2,34 @@ import type { NextPage } from "next";
 import { trpc } from "../utils/trpc";
 import NavTop from "../components/navtop";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion"; // ✅ Import Framer Motion for animations
+import { motion } from "framer-motion";
 
 const Home: NextPage = () => {
   const { data: posts, isLoading, isError, refetch } = trpc.example.getPosts.useQuery();
   const [visiblePosts, setVisiblePosts] = useState(8);
-  const [hasLoaded, setHasLoaded] = useState(false); // ✅ Prevent animation reloading
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    setHasLoaded(true); // ✅ Set flag to trigger animations once
+    setHasLoaded(true);
   }, []);
 
   return (
     <>
       <NavTop />
-      <div className="container mx-auto px-6 py-12 pt-24 min-h-screen">
+      <div className="container mx-auto px-6 py-12 pt-24 min-h-screen dark:bg-dark-primary transition-colors duration-300">
         
-        {/* ✅ Loading State - Pulsing Animation */}
         {isLoading && (
           <div className="flex flex-col items-center justify-center h-screen animate-fade-in">
             <div className="relative flex items-center justify-center">
               <span className="absolute animate-ping h-16 w-16 rounded-full bg-teal-400 opacity-75"></span>
               <span className="relative inline-block w-16 h-16 bg-teal-400 rounded-full"></span>
             </div>
-            <p className="text-2xl font-semibold text-gray-800 mt-6 tracking-wide">
+            <p className="text-2xl font-semibold text-gray-800 dark:text-dark-text mt-6 tracking-wide">
               Fetching fresh content...
             </p>
           </div>
         )}
 
-        {/* ✅ Error State */}
         {isError && (
           <div className="text-center text-red-500 mt-12">
             <p className="text-xl font-semibold">Oops! Something went wrong.</p>
@@ -44,7 +42,6 @@ const Home: NextPage = () => {
           </div>
         )}
 
-        {/* ✅ Empty State */}
         {!isLoading && !isError && posts?.length === 0 && (
           <div className="text-center mt-12 animate-fade-in">
             <img
@@ -53,7 +50,7 @@ const Home: NextPage = () => {
               className="mx-auto mb-6 w-52 opacity-80"
               loading="lazy"
             />
-            <p className="text-xl text-gray-800 font-medium">
+            <p className="text-xl text-gray-800 dark:text-dark-text font-medium">
               Looks like no one has posted yet. Be the first!
             </p>
             <button 
@@ -64,7 +61,6 @@ const Home: NextPage = () => {
           </div>
         )}
 
-        {/* ✅ Post Grid - Animated on Load */}
         <motion.div 
           className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           initial={{ opacity: 0 }}
@@ -74,20 +70,18 @@ const Home: NextPage = () => {
           {posts?.slice().reverse().slice(0, visiblePosts).map((post, index) => (
             <motion.div
               key={post.id}
-              className="relative group bg-white rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-2 border border-gray-300 p-6 
-                        backdrop-blur-xl bg-opacity-80 hover:ring-2 hover:ring-teal-400"
+              className="relative group bg-white dark:bg-dark-secondary rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-2 border border-gray-300 dark:border-gray-700 p-6 backdrop-blur-xl bg-opacity-80 hover:ring-2 hover:ring-teal-400"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1, duration: 0.3 }} // ✅ Staggered animation for posts
+              transition={{ delay: index * 0.1, duration: 0.3 }}
             >
-              <h2 className="text-2xl font-bold mb-4 text-gray-900 tracking-wide">
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-dark-text tracking-wide">
                 {post.title}
               </h2>
-              <p className="text-gray-700 leading-relaxed">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 {post.content}
               </p>
 
-              {/* ✅ Author Info */}
               <div className="flex items-center mt-6">
                 <div className="relative">
                   <img
@@ -99,7 +93,7 @@ const Home: NextPage = () => {
                   <div className="absolute inset-0 rounded-full border-2 border-teal-400 animate-pulse opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
                 <div className="ml-4">
-                  <p className="font-semibold text-gray-900 text-lg">
+                  <p className="font-semibold text-gray-900 dark:text-dark-text text-lg">
                     {post.user?.name}
                   </p>
                 </div>
@@ -108,7 +102,6 @@ const Home: NextPage = () => {
           ))}
         </motion.div>
 
-        {/* ✅ Load More Button - Animated */}
         {posts && visiblePosts < posts.length && (
           <motion.button
             onClick={() => setVisiblePosts(visiblePosts + 4)}

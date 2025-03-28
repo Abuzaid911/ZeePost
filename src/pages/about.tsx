@@ -17,13 +17,13 @@ const About: NextPage = () => {
     return (
         <>
             <NavTop />
-            <div className="min-h-screen bg-white flex flex-col md:flex-row items-center justify-center p-10 gap-12">
+            <div className="min-h-screen bg-white dark:bg-dark-primary flex flex-col md:flex-row items-center justify-center p-10 gap-12 transition-colors duration-300">
 
                 {/* Left Side - Profile Info */}
                 <div className="text-center md:text-left">
-                    <h1 className="text-4xl font-bold text-gray-900 ">Hey!!</h1>
+                    <h1 className="text-4xl font-bold text-gray-900 dark:text-dark-text">Hey!!</h1>
 
-                    <p className="text-lg text-green-800 font-medium mt-4 space-y-2">
+                    <p className="text-lg text-green-800 dark:text-green-400 font-medium mt-4 space-y-2">
                         I&apos;m Abuzaid! 👋 I&apos;m the mastermind behind this operation xD.
                         <br></br>
                         A passionate creator who loves all things tech & design.
@@ -39,7 +39,7 @@ const About: NextPage = () => {
                                 href={url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="p-3 rounded-full shadow-md transition-all transform hover:scale-110"
+                                className="p-3 rounded-full shadow-md transition-all transform hover:scale-110 dark:shadow-teal-400/20"
                                 style={{ backgroundColor: color }}
                             >
                                 <Icon className="text-white text-xl" />
@@ -49,7 +49,7 @@ const About: NextPage = () => {
                 </div>
 
                 {/* Right Side - Profile Image */}
-                <div className="relative rounded-full overflow-hidden w-48 h-48 mb-6 mx-auto md:mx-0 shadow-lg border-4 border-teal-400">
+                <div className="relative rounded-full overflow-hidden w-48 h-48 mb-6 mx-auto md:mx-0 shadow-lg border-4 border-teal-400 dark:border-teal-500">
                     <Image
                         src="https://lh3.googleusercontent.com/a/ACg8ocJ2GwRzE-VXicY3hc9zoR5FnI5pna5DcVAa5IMzmECU2WQbB8-PfA=s576-c-no"
                         alt="Profile Picture"
