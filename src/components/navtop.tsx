@@ -132,13 +132,13 @@ function NavTop() {
       {menuOpen && (
         <div
           ref={mobileMenuRef}
-          className="md:hidden absolute top-full left-0 w-full bg-white shadow-md transition-all duration-300"
+          className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-dark-secondary shadow-md dark:shadow-teal-400/10 border-t border-gray-200 dark:border-gray-600 transition-all duration-300"
         >
           {["/", "/new", "/about"].map((path) => (
             <Link
               key={path}
               href={path}
-              className="block text-gray-800 text-lg px-6 py-4 border-b border-gray-200 hover:bg-gray-100"
+              className="block text-gray-800 dark:text-gray-200 text-lg px-6 py-4 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-dark-primary/50 transition-all duration-300"
               onClick={() => setMenuOpen(false)}
             >
               {path === "/" ? "Home" : path === "/new" ? "New Post" : "About"}
@@ -147,20 +147,20 @@ function NavTop() {
 
           {/* Mobile Auth Buttons */}
           {status === "unauthenticated" && (
-            <div className="flex justify-center space-x-4 py-4">
+            <div className="flex justify-center space-x-4 py-4 bg-white dark:bg-dark-secondary">
               <button
                 aria-label="Sign in with Google"
-                className="p-3 bg-gray-100 border border-gray-300 rounded-full hover:bg-gray-200 transition-all"
+                className="p-3 bg-gray-100 dark:bg-dark-primary border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-200 dark:hover:bg-dark-primary/70 transition-all"
                 onClick={() => signIn("google")}
               >
-                <GoogleIcon className="h-6 w-6 text-gray-600" />
+                <GoogleIcon className="h-6 w-6 text-gray-600 dark:text-gray-300" />
               </button>
               <button
                 aria-label="Sign in with GitHub"
-                className="p-3 bg-gray-100 border border-gray-300 rounded-full hover:bg-gray-200 transition-all"
+                className="p-3 bg-gray-100 dark:bg-dark-primary border border-gray-300 dark:border-gray-600 rounded-full hover:bg-gray-200 dark:hover:bg-dark-primary/70 transition-all"
                 onClick={() => signIn("github")}
               >
-                <GithubIcon className="h-6 w-6 text-gray-600" />
+                <GithubIcon className="h-6 w-6 text-gray-600 dark:text-gray-300" />
               </button>
             </div>
           )}
